@@ -1,0 +1,18 @@
+:host {
+  display: block;
+  background: linear-gradient(#ececec, #ffffff);
+  box-shadow: 0 1px 4px 0 rgba(0, 21, 41, 0.12);
+}
+
+.content {
+  max-width: var(--content-width);
+  width: 100%;
+  margin: 0 auto;
+  padding: 44px var(--content-x-padding);
+}
+
+@media only screen and (min-width: 80em) {
+  .content {
+    --content-x-padding: 0;
+  }
+}

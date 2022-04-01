@@ -1,1 +1,18 @@
 /* You can add global styles to this file, and also import other style files */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --screen-sm: 30em;
+  --screen-md: 48em;
+  --screen-lg: 62em;
+  --screen-xl: 80em;
+
+  --content-width: 80em;
+  --content-x-padding: 2rem;
+  --bg-color: #fcfcfc;
+}
