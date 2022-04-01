@@ -3,12 +3,15 @@ import { CommonModule } from '@angular/common';
 
 import { NewsRoutingModule } from './news-routing.module';
 
+import { MainLayoutComponent } from './ui/layout';
+import { FavoritesPageComponent, NewsPageComponent } from './ui/pages';
 
 @NgModule({
-  declarations: [],
-  imports: [
-    CommonModule,
-    NewsRoutingModule
-  ]
+  imports: [CommonModule, NewsRoutingModule],
+  declarations: [
+    MainLayoutComponent,
+    NewsPageComponent,
+    FavoritesPageComponent,
+  ],
 })
-export class NewsModule { }
+export class NewsModule {}
