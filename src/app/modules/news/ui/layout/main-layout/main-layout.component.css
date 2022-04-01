@@ -1,0 +1,29 @@
+:host {
+  display: block;
+}
+
+.navbar {
+  margin: 4rem 0;
+
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.navbar__item {
+  width: 100px;
+  padding: 0.375rem 0;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 500;
+  text-decoration: none;
+
+  border-radius: 2px;
+  border: 2px solid #d6d6d6;
+}
+
+.navbar__item.active {
+  border-color: #1797ff;
+  color: #1797ff;
+}
