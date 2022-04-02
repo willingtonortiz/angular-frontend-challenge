@@ -1,0 +1,13 @@
+<button class="button" (click)="previousPage()">{{ "<" }}</button>
+
+<ng-container *ngFor="let ipage of pages">
+  <button
+    class="page"
+    [ngClass]="{ active: ipage === page }"
+    (click)="setPage(ipage)"
+  >
+    {{ ipage }}
+  </button>
+</ng-container>
+
+<button class="button" (click)="nextPage()">{{ ">" }}</button>

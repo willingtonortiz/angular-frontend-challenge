@@ -5,8 +5,14 @@ import { HeaderComponent } from './components/header/header.component';
 import { NewItemComponent } from './components/new-item/new-item.component';
 import { FormatDistancePipe } from './pipes/format-distance.pipe';
 import { NewsListComponent } from './components/news-list/news-list.component';
+import { PaginationComponent } from './components/pagination/pagination.component';
 
-const COMPONENTS = [HeaderComponent, NewItemComponent, NewsListComponent];
+const COMPONENTS = [
+  HeaderComponent,
+  NewItemComponent,
+  NewsListComponent,
+  PaginationComponent,
+];
 const PIPES = [FormatDistancePipe];
 
 @NgModule({
