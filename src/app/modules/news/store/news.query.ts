@@ -10,4 +10,10 @@ export class NewsQuery extends Query<NewsState> {
   constructor(protected override store: NewsStore) {
     super(store);
   }
+
+  get selectedQuery() {
+    const { query } = this.getValue();
+
+    return query;
+  }
 }

@@ -2,7 +2,6 @@ import { DOCUMENT } from '@angular/common';
 import { Component, HostListener, Inject, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
-import { News } from '../../../../../core/domain/models/news';
 import { NewsQuery, NewsService } from '../../../store';
 
 const FRAMEWORKS = [
@@ -40,12 +39,23 @@ export class NewsPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.frameworkInput.valueChanges.subscribe((x) => {
-      console.log(x);
+    this.loadSelectedFramework();
 
+    this.newsService.loadNews();
+
+    this.frameworkInput.valueChanges.subscribe((x) => {
       this.newsService.updateNewsQuery(x.value);
     });
-    this.newsService.loadNews();
+  }
+
+  loadSelectedFramework() {
+    const query = this.newsQuery.selectedQuery;
+    if (!query) {
+      return;
+    }
+
+    const framework = this.frameworks.find((x) => x.value === query);
+    this.frameworkInput.setValue(framework);
   }
 
   toggleFavorite(newId: number) {
