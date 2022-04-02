@@ -33,7 +33,7 @@ type PaginatedResponse = {
 
 @Injectable({ providedIn: 'root' })
 export class HackernewsService {
-  constructor(private readonly http: HttpClient) {}
+  constructor(public readonly http: HttpClient) {}
 
   async fetchNewsByName({
     page = 1,
