@@ -8,6 +8,7 @@ export interface NewsState {
   page: number;
   pagesCount: number;
   pageSize: number;
+  isLoading: boolean;
 }
 
 export function createInitialState(): NewsState {
@@ -16,6 +17,7 @@ export function createInitialState(): NewsState {
     pagesCount: 0,
     page: 0,
     news: [],
+    isLoading: false,
   };
 }
 

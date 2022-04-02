@@ -1,0 +1,10 @@
+<div class="content">
+  <app-select
+    class="framework-input"
+    placeholder="Select your news"
+    [formControl]="frameworkInput"
+    [items]="frameworks"
+  ></app-select>
+
+  <app-news-list [news]="(news | async) ?? []"></app-news-list>
+</div>

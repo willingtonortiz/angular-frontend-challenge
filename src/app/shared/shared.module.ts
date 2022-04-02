@@ -6,12 +6,14 @@ import { NewItemComponent } from './components/new-item/new-item.component';
 import { FormatDistancePipe } from './pipes/format-distance.pipe';
 import { NewsListComponent } from './components/news-list/news-list.component';
 import { PaginationComponent } from './components/pagination/pagination.component';
+import { SelectComponent } from './components/select/select.component';
 
 const COMPONENTS = [
   HeaderComponent,
   NewItemComponent,
   NewsListComponent,
   PaginationComponent,
+  SelectComponent,
 ];
 const PIPES = [FormatDistancePipe];
 

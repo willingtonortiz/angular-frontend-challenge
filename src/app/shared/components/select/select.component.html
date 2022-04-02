@@ -1,0 +1,21 @@
+<div class="container" (click)="toggleOptions()">
+  <div *ngIf="selectedItem" class="selected">
+    <img class="image" [src]="selectedItem.image" [alt]="selectedItem.value" />
+
+    <span>{{ selectedItem.label }}</span>
+  </div>
+
+  <div *ngIf="!selectedItem" class="placeholder">
+    <p>{{ placeholder }}</p>
+
+    <img src="assets/chevron-down.svg" alt="chevron-down" />
+  </div>
+</div>
+
+<div class="options" *ngIf="showOptions">
+  <div class="option" *ngFor="let item of items" (click)="selectOption(item)">
+    <img class="image" [src]="item.image" [alt]="item.value" />
+
+    <span>{{ item.label }}</span>
+  </div>
+</div>

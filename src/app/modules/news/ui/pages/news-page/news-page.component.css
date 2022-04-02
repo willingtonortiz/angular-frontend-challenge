@@ -1,0 +1,13 @@
+:host {
+  display: block;
+}
+
+.content {
+  margin: 0 auto;
+  max-width: var(--content-width);
+  padding: 0 var(--content-x-padding);
+}
+
+.framework-input {
+  margin: 2rem 0;
+}

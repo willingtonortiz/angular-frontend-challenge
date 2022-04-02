@@ -1,7 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { News } from '../../../../../core/domain/models/news';
+import { DOCUMENT } from '@angular/common';
+import { Component, HostListener, Inject, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 
-import { NewsQuery, NewsStore } from '../../../store';
+import { News } from '../../../../../core/domain/models/news';
+import { NewsQuery, NewsService } from '../../../store';
+
+const FRAMEWORKS = [
+  { label: 'Angular', value: 'angular', image: 'assets/icon-angular.png' },
+  { label: 'Reactjs', value: 'reactjs', image: 'assets/icon-react.png' },
+  { label: 'Vuejs', value: 'vuejs', image: 'assets/icon-vue.png' },
+];
 
 @Component({
   selector: 'app-news-page',
@@ -9,14 +17,36 @@ import { NewsQuery, NewsStore } from '../../../store';
   styleUrls: ['./news-page.component.css'],
 })
 export class NewsPageComponent implements OnInit {
-  news: News[] = [];
+  news = this.newsQuery.newsList$;
+  frameworkInput = new FormControl();
+  frameworks = FRAMEWORKS;
 
   constructor(
-    private readonly newsStore: NewsStore,
-    private readonly newsQuery: NewsQuery
+    @Inject(DOCUMENT)
+    private readonly document: Document,
+    private readonly newsQuery: NewsQuery,
+    private readonly newsService: NewsService
   ) {}
 
-  ngOnInit(): void {}
+  @HostListener('window:scroll')
+  onWindowScroll(): void {
+    const scrollTop = this.document.documentElement.scrollTop;
+    const offsetHeight = this.document.documentElement.offsetHeight;
+    const scrollHeight = this.document.documentElement.scrollHeight;
+
+    if (scrollHeight - (scrollTop + offsetHeight) < 500) {
+      this.newsService.loadMoreNews();
+    }
+  }
+
+  ngOnInit(): void {
+    this.frameworkInput.valueChanges.subscribe((x) => {
+      console.log(x);
+
+      this.newsService.updateNewsQuery(x.value);
+    });
+    this.newsService.loadNews();
+  }
 
   toggleFavorite(newId: number) {
     console.log(newId);

@@ -26,8 +26,9 @@ type FetchNewsByNameResponse = {
 };
 
 type PaginatedResponse = {
-  pages: number;
+  pageCount: number;
   pageSize: number;
+  page: number;
   news: News[];
 };
 
@@ -50,7 +51,8 @@ export class HackernewsService {
 
     return {
       pageSize: response.hitsPerPage,
-      pages: response.nbPages,
+      pageCount: response.nbPages,
+      page: response.page + 1,
       news,
     };
   }

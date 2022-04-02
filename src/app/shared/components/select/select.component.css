@@ -1,0 +1,65 @@
+:host {
+  max-width: 240px;
+
+  display: block;
+  position: relative;
+
+  background-color: #ffffff;
+  color: #2e2e2e;
+  font-size: 14px;
+  z-index: 10;
+}
+
+.container {
+  border: 1px solid #2e2e2e;
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}
+
+.container .placeholder {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+}
+
+.container .selected {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+}
+
+.container .selected .image {
+  width: 1rem;
+  margin-right: 0.5rem;
+}
+
+.options {
+  width: 100%;
+  position: absolute;
+  left: 0;
+  top: 40;
+
+  display: flex;
+  flex-flow: column nowrap;
+
+  background-color: #ffffff;
+  box-shadow: 0 2px 2px 0 #dad8d8;
+}
+
+.option {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  padding: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.option .image {
+  margin-right: 0.5rem;
+}
+
+.option:hover {
+  background-color: #eeeeee;
+}
