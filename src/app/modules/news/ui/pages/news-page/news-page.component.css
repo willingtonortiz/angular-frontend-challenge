@@ -1,0 +1,9 @@
+:host {
+  max-width: var(--content-width);
+  margin: 0 auto;
+
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+
+  gap: 40px;
+}

@@ -1,0 +1,52 @@
+:host {
+  width: 100%;
+
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: stretch;
+
+  border: 1px solid #979797;
+  border-radius: 6px;
+}
+
+.content {
+  flex: 1;
+
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: flex-start;
+
+  padding: 1rem 2rem;
+  font-weight: 500;
+}
+
+.content__header {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+
+  margin-bottom: 0.5rem;
+}
+
+.header__icon {
+  margin-right: 0.5rem;
+}
+
+.new-time-and-author {
+  font-size: 11px;
+}
+
+.new-title {
+  font-size: 14px;
+}
+
+.icon {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+
+  align-items: center;
+  width: 4rem;
+  background-color: rgba(151, 151, 151, 0.06);
+  cursor: pointer;
+}

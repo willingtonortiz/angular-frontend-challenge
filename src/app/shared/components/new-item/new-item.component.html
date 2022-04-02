@@ -1,0 +1,17 @@
+<a class="content" [href]="url" target="_blank">
+  <div class="content__header">
+    <img class="header__icon" src="/assets/icon-time.png" alt="Time" />
+
+    <span class="new-time-and-author">
+      {{ createdAt | formatDistance: now }} by {{ author }}
+    </span>
+  </div>
+
+  <p class="new-title">
+    {{ title }}
+  </p>
+</a>
+
+<div class="icon" (click)="favoriteToggle()">
+  <img [src]="favoriteIcon" alt="Favorite" />
+</div>
