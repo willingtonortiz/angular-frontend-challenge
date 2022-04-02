@@ -7,6 +7,11 @@
 
   border: 1px solid #979797;
   border-radius: 6px;
+  transition: opacity 0.5s ease;
+}
+
+:host:hover {
+  opacity: 0.4;
 }
 
 .content {
@@ -35,10 +40,12 @@
 
 .new-time-and-author {
   font-size: 11px;
+  color: #767676;
 }
 
 .new-title {
   font-size: 14px;
+  color: #6b6b6b;
 }
 
 .icon {
