@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { News } from '../../../../../core/domain/models/news';
+import { HackernewsService } from '../../../infrastructure/services/hackernews.service';
 
 @Component({
   selector: 'app-news-page',
