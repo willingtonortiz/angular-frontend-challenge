@@ -81,4 +81,18 @@ describe('NewItemComponent', () => {
       compiled.getElementsByClassName('content')[0]?.getAttribute('href')
     ).toContain(NEW_URL);
   });
+
+  it('should emit and event when the favorite icon is clicked', () => {
+    // Spy on emitter
+    spyOn(component.favoriteToggled, 'emit');
+
+    // Trigger click event
+    const compiled = fixture.nativeElement as HTMLElement;
+    const icon = compiled.getElementsByClassName('icon')[0];
+    icon.dispatchEvent(new Event('click'));
+
+    fixture.detectChanges();
+
+    expect(component.favoriteToggled.emit).toHaveBeenCalled();
+  });
 });

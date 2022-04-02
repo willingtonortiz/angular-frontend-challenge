@@ -1,0 +1,10 @@
+<ng-container *ngFor="let newItem of news">
+  <app-new-item
+    [isFavorite]="newItem.isFavorite"
+    [author]="newItem.author"
+    [url]="newItem.url"
+    [title]="newItem.title"
+    [createdAt]="newItem.createdAt"
+    (favoriteToggled)="toggleFavorite(newItem.id)"
+  ></app-new-item>
+</ng-container>
