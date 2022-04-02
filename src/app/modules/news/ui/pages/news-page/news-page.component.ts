@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { News } from '../../../../../core/domain/models/news';
-import { HackernewsService } from '../../../infrastructure/services/hackernews.service';
+
+import { NewsQuery, NewsStore } from '../../../store';
 
 @Component({
   selector: 'app-news-page',
@@ -10,7 +11,10 @@ import { HackernewsService } from '../../../infrastructure/services/hackernews.s
 export class NewsPageComponent implements OnInit {
   news: News[] = [];
 
-  constructor() {}
+  constructor(
+    private readonly newsStore: NewsStore,
+    private readonly newsQuery: NewsQuery
+  ) {}
 
   ngOnInit(): void {}
 
