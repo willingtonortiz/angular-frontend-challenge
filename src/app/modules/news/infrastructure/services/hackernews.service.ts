@@ -47,7 +47,8 @@ export class HackernewsService {
       this.http.get<FetchNewsByNameResponse>(URL)
     );
 
-    const newsList: News[] = response.hits.map(hitResponseToNews);
+    const filteredNews = response.hits.filter(removeUncompletedNews);
+    const newsList: News[] = filteredNews.map(hitResponseToNews);
 
     return {
       pageSize: response.hitsPerPage,
@@ -57,6 +58,12 @@ export class HackernewsService {
     };
   }
 }
+
+const removeUncompletedNews = (hit: HitResponse): boolean => {
+  return (
+    !!hit.author && !!hit.story_title && !!hit.story_url && !!hit.created_at
+  );
+};
 
 const hitResponseToNews = (hit: HitResponse): News => {
   return {
