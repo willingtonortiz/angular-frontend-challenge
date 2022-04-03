@@ -4,7 +4,7 @@ import { Store, StoreConfig } from '@datorama/akita';
 import { News } from '../../../core/domain/models/news';
 
 export interface FavoriteNewsState {
-  news: News[];
+  newsList: News[];
   page: number;
   pageSize: number;
   itemsCount: number;
@@ -12,7 +12,7 @@ export interface FavoriteNewsState {
 
 function createInitialState(): FavoriteNewsState {
   return {
-    news: [],
+    newsList: [],
     pageSize: 8,
     page: 1,
     itemsCount: 10,

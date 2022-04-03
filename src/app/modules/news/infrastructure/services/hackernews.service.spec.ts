@@ -32,7 +32,7 @@ describe('HackernewsService', () => {
 
     spyOn(service.http, 'get').and.returnValue(of(FAKE_RESPONSE));
 
-    service.fetchNewsByName({ page: PAGE, query: QUERY });
+    service.fetchNewsByQueryAndPage({ page: PAGE, query: QUERY });
 
     // Expect
     expect(service.http.get).toHaveBeenCalled();

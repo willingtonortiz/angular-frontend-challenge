@@ -2,24 +2,36 @@ import { Injectable } from '@angular/core';
 import { News } from '../../../core/domain/models/news';
 
 import { FavoriteNewsStore } from './favorites.store';
+import { NewsStore } from './news.store';
 
 const FAVORITE_NEWS_KEY = 'FAVORITE_NEWS_KEY';
 
 // Contains the application logic for favorites-page
 @Injectable()
 export class FavoriteNewsService {
-  constructor(private readonly favoritesStore: FavoriteNewsStore) {
+  constructor(
+    private readonly favoritesStore: FavoriteNewsStore,
+    private readonly newsStore: NewsStore
+  ) {
     this.initialize();
   }
 
   initialize() {
-    const news = this.getFavoritesFromStorage();
+    const newsList = this.getFavoritesFromStorage();
 
-    this.favoritesStore.update({ news, itemsCount: news.length });
+    this.favoritesStore.update({ newsList, itemsCount: newsList.length });
+  }
+
+  toggleFavoriteNews(news: News) {
+    if (news.isFavorite) {
+      this.removeFavoriteNews(news);
+    } else {
+      this.addFavoriteNews(news);
+    }
   }
 
   addFavoriteNews(news: News) {
-    const { news: currentNews } = this.favoritesStore.getValue();
+    const { newsList: currentNews } = this.favoritesStore.getValue();
 
     const favoriteNews: News = { ...news, isFavorite: true };
     const newsList = [...currentNews, favoriteNews];
@@ -27,18 +39,20 @@ export class FavoriteNewsService {
     // Updating store
     this.updateNews(newsList);
     this.adjustPageOnAdd();
+    this.newsStore.toggleFavoriteById(news.id);
 
     // Saving to storage
     this.saveSelectedQueryToStorage(newsList);
   }
 
   removeFavoriteNews(news: News) {
-    const { news: currentNews } = this.favoritesStore.getValue();
+    const { newsList: currentNews } = this.favoritesStore.getValue();
 
     // Updating store
     const newsList = currentNews.filter((x) => x.id !== news.id);
     this.updateNews(newsList);
     this.adjustPageOnRemove();
+    this.newsStore.toggleFavoriteById(news.id);
 
     // Saving to storage
     this.saveSelectedQueryToStorage(newsList);
@@ -46,7 +60,7 @@ export class FavoriteNewsService {
 
   updateNews(newsList: News[]) {
     const itemsCount = newsList.length;
-    this.favoritesStore.update({ news: newsList, itemsCount });
+    this.favoritesStore.update({ newsList, itemsCount });
   }
 
   adjustPageOnAdd() {

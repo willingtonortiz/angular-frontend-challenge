@@ -5,11 +5,11 @@ import { FavoriteNewsState, FavoriteNewsStore } from './favorites.store';
 
 @Injectable()
 export class FavoriteNewsQuery extends Query<FavoriteNewsState> {
-  newsList$ = this.select(({ news, page, pageSize }) => {
+  newsList$ = this.select(({ newsList, page, pageSize }) => {
     const start = (page - 1) * pageSize;
     const end = page * pageSize;
 
-    return news.slice(start, end);
+    return newsList.slice(start, end);
   });
 
   page$ = this.select((x) => x.page);

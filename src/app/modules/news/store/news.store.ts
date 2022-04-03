@@ -4,7 +4,7 @@ import { Store, StoreConfig } from '@datorama/akita';
 import { News } from '../../../core/domain/models/news';
 
 export interface NewsState {
-  news: News[];
+  newsList: News[];
   page: number;
   pagesCount: number;
   pageSize: number;
@@ -17,7 +17,7 @@ function createInitialState(): NewsState {
     pageSize: 0,
     pagesCount: 0,
     page: 0,
-    news: [],
+    newsList: [],
     isLoading: false,
     query: null,
   };
@@ -28,5 +28,18 @@ function createInitialState(): NewsState {
 export class NewsStore extends Store<NewsState> {
   constructor() {
     super(createInitialState());
+  }
+
+  toggleFavoriteById(newsId: string) {
+    const { newsList } = this.getValue();
+    const updatedList = newsList.map((x) => {
+      if (x.id === newsId) {
+        x.isFavorite = !x.isFavorite;
+      }
+
+      return x;
+    });
+
+    this.update({ newsList: updatedList });
   }
 }

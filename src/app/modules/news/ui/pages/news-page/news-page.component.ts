@@ -61,6 +61,6 @@ export class NewsPageComponent implements OnInit {
   }
 
   toggleFavorite(news: News) {
-    this.favoritesService.addFavoriteNews(news);
+    this.favoritesService.toggleFavoriteNews(news);
   }
 }

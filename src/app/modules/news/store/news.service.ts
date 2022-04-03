@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { NewsStore } from './news.store';
 
 import { HackernewsService } from '../infrastructure/services/hackernews.service';
+import { FavoriteNewsQuery } from './favorites.query';
+import { News } from '../../../core/domain/models/news';
 
 const SELECTED_QUERY_KEY = 'SELECTED_QUERY_KEY';
 
@@ -10,14 +12,15 @@ const SELECTED_QUERY_KEY = 'SELECTED_QUERY_KEY';
 @Injectable()
 export class NewsService {
   constructor(
+    private readonly hackerNewsService: HackernewsService,
     private readonly newsStore: NewsStore,
-    private readonly hackerNewsService: HackernewsService
+    private readonly favoritesQuery: FavoriteNewsQuery
   ) {
     this.initialize();
   }
 
   initialize() {
-    const query = this.getSelectedQuery();
+    const query = this.getSelectedQueryFromStorage();
     this.newsStore.update({ query });
   }
 
@@ -27,44 +30,24 @@ export class NewsService {
       return;
     }
 
-    const { news, pageSize, pageCount, page } =
-      await this.hackerNewsService.fetchNewsByName({ page: 1, query });
-
-    this.newsStore.update({
-      news,
-      page,
-      pagesCount: pageCount,
-      pageSize,
-      query,
-    });
+    this.fetchNewsByQueryAndPage({ query, page: 1 });
   }
 
   async updateNewsQuery(query: string) {
     // Saving new query to localstorage
-    this.saveSelectedQuery(query);
-
-    const { news, pageSize, pageCount, page } =
-      await this.hackerNewsService.fetchNewsByName({ page: 1, query });
-
-    this.newsStore.update({
-      news,
-      page,
-      pagesCount: pageCount,
-      pageSize,
-      query,
-    });
+    this.saveSelectedQueryToStorage(query);
+    this.fetchNewsByQueryAndPage({ query, page: 1 });
   }
 
   async loadMoreNews() {
     const {
       page: currentPage,
       isLoading,
-      news: currentNews,
       pagesCount,
       query,
     } = this.newsStore.getValue();
 
-    if (!query) {
+    if (!query || isLoading) {
       return;
     }
 
@@ -74,27 +57,61 @@ export class NewsService {
       return;
     }
 
-    if (isLoading) {
-      return;
-    }
-
     // Set loading to avoid more than one call at a time
     this.newsStore.update({ isLoading: true });
 
-    const { news, pageSize, pageCount, page } =
-      await this.hackerNewsService.fetchNewsByName({ page: nextPage, query });
+    await this.fetchNewsByQueryAndPage({ query, page: nextPage });
 
-    // Adding new news
-    this.newsStore.update({
-      news: [...currentNews, ...news],
-      page,
-      pagesCount: pageCount,
-      pageSize,
-      isLoading: false,
+    this.newsStore.update({ isLoading: false });
+  }
+
+  mergeNewsWithFavoritesNews(newsList: News[], favoriteNewsList: News[]) {
+    return newsList.map((x) => {
+      const isFound = favoriteNewsList.find((y) => y.id === x.id);
+      if (isFound) {
+        x.isFavorite = true;
+      }
+      return x;
     });
   }
 
-  getSelectedQuery(): string | null {
+  async fetchNewsByQueryAndPage({
+    page,
+    query,
+  }: {
+    query: string;
+    page: number;
+  }): Promise<void> {
+    const { newsList: currentNews } = this.newsStore.getValue();
+    const {
+      newsList: responseNews,
+      pageSize,
+      pageCount,
+    } = await this.hackerNewsService.fetchNewsByQueryAndPage({ page, query });
+
+    const { newsList: favoriteNews } = this.favoritesQuery.getValue();
+    const mergedNews = this.mergeNewsWithFavoritesNews(
+      responseNews,
+      favoriteNews
+    );
+
+    let newsList: News[] = [];
+    if (page === 1) {
+      newsList = mergedNews;
+    } else {
+      newsList = [...currentNews, ...mergedNews];
+    }
+
+    this.newsStore.update({
+      newsList,
+      page,
+      pagesCount: pageCount,
+      pageSize,
+      query,
+    });
+  }
+
+  getSelectedQueryFromStorage(): string | null {
     const selectedQuery = localStorage.getItem(SELECTED_QUERY_KEY);
     if (!selectedQuery) {
       return null;
@@ -103,7 +120,7 @@ export class NewsService {
     return selectedQuery;
   }
 
-  saveSelectedQuery(query: string) {
+  saveSelectedQueryToStorage(query: string) {
     localStorage.setItem(SELECTED_QUERY_KEY, query);
   }
 }

@@ -29,14 +29,14 @@ type PaginatedResponse = {
   pageCount: number;
   pageSize: number;
   page: number;
-  news: News[];
+  newsList: News[];
 };
 
 @Injectable({ providedIn: 'root' })
 export class HackernewsService {
   constructor(public readonly http: HttpClient) {}
 
-  async fetchNewsByName({
+  async fetchNewsByQueryAndPage({
     page = 1,
     query,
   }: FetchNewsByNameParams): Promise<PaginatedResponse> {
@@ -47,13 +47,13 @@ export class HackernewsService {
       this.http.get<FetchNewsByNameResponse>(URL)
     );
 
-    const news: News[] = response.hits.map(hitResponseToNews);
+    const newsList: News[] = response.hits.map(hitResponseToNews);
 
     return {
       pageSize: response.hitsPerPage,
       pageCount: response.nbPages,
       page: response.page + 1,
-      news,
+      newsList,
     };
   }
 }
