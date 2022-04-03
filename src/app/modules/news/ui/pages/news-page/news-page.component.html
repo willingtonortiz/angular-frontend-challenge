@@ -6,5 +6,8 @@
     [items]="frameworks"
   ></app-select>
 
-  <app-news-list [news]="(news | async) ?? []"></app-news-list>
+  <app-news-list
+    [news]="(news | async) ?? []"
+    (favoriteToggled)="toggleFavorite($event)"
+  ></app-news-list>
 </div>

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { News } from '../../../core/domain/models/news';
 
@@ -9,9 +9,9 @@ import { News } from '../../../core/domain/models/news';
 })
 export class NewsListComponent {
   @Input() news: News[] = [];
-  @Output() favoriteToggled = new EventEmitter<number>();
+  @Output() favoriteToggled = new EventEmitter<News>();
 
-  toggleFavorite(newId: number) {
-    this.favoriteToggled.emit(newId);
+  toggleFavorite(news: News) {
+    this.favoriteToggled.emit(news);
   }
 }

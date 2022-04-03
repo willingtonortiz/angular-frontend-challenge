@@ -1,8 +1,9 @@
 import { DOCUMENT } from '@angular/common';
 import { Component, HostListener, Inject, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { News } from '../../../../../core/domain/models/news';
 
-import { NewsQuery, NewsService } from '../../../store';
+import { FavoriteNewsService, NewsQuery, NewsService } from '../../../store';
 
 const FRAMEWORKS = [
   { label: 'Angular', value: 'angular', image: 'assets/icon-angular.png' },
@@ -24,7 +25,8 @@ export class NewsPageComponent implements OnInit {
     @Inject(DOCUMENT)
     private readonly document: Document,
     private readonly newsQuery: NewsQuery,
-    private readonly newsService: NewsService
+    private readonly newsService: NewsService,
+    private readonly favoritesService: FavoriteNewsService
   ) {}
 
   @HostListener('window:scroll')
@@ -58,7 +60,7 @@ export class NewsPageComponent implements OnInit {
     this.frameworkInput.setValue(framework);
   }
 
-  toggleFavorite(newId: number) {
-    console.log(newId);
+  toggleFavorite(news: News) {
+    this.favoritesService.addFavoriteNews(news);
   }
 }

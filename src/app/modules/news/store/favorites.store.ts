@@ -3,29 +3,25 @@ import { Store, StoreConfig } from '@datorama/akita';
 
 import { News } from '../../../core/domain/models/news';
 
-export interface NewsState {
+export interface FavoriteNewsState {
   news: News[];
   page: number;
-  pagesCount: number;
   pageSize: number;
-  isLoading: boolean;
-  query: string | null;
+  itemsCount: number;
 }
 
-function createInitialState(): NewsState {
+function createInitialState(): FavoriteNewsState {
   return {
-    pageSize: 0,
-    pagesCount: 0,
-    page: 0,
     news: [],
-    isLoading: false,
-    query: null,
+    pageSize: 8,
+    page: 1,
+    itemsCount: 10,
   };
 }
 
 @Injectable()
-@StoreConfig({ name: 'news' })
-export class NewsStore extends Store<NewsState> {
+@StoreConfig({ name: 'favorites' })
+export class FavoriteNewsStore extends Store<FavoriteNewsState> {
   constructor() {
     super(createInitialState());
   }

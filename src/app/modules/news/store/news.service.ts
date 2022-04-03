@@ -46,7 +46,13 @@ export class NewsService {
     const { news, pageSize, pageCount, page } =
       await this.hackerNewsService.fetchNewsByName({ page: 1, query });
 
-    this.newsStore.update({ news, page, pagesCount: pageCount, pageSize });
+    this.newsStore.update({
+      news,
+      page,
+      pagesCount: pageCount,
+      pageSize,
+      query,
+    });
   }
 
   async loadMoreNews() {

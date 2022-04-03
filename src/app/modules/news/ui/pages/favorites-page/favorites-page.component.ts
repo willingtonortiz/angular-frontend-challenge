@@ -1,15 +1,29 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+
+import { News } from '../../../../../core/domain/models/news';
+import { FavoriteNewsQuery, FavoriteNewsService } from '../../../store';
 
 @Component({
   selector: 'app-favorites-page',
   templateUrl: './favorites-page.component.html',
-  styleUrls: ['./favorites-page.component.css']
+  styleUrls: ['./favorites-page.component.css'],
 })
-export class FavoritesPageComponent implements OnInit {
+export class FavoritesPageComponent {
+  news$ = this.favoritesQuery.newsList$;
+  page$ = this.favoritesQuery.page$;
+  pageSize$ = this.favoritesQuery.pageSize$;
+  itemCount$ = this.favoritesQuery.itemsCount$;
 
-  constructor() { }
+  constructor(
+    private readonly favoritesQuery: FavoriteNewsQuery,
+    private readonly favoritesService: FavoriteNewsService
+  ) {}
 
-  ngOnInit(): void {
+  changePage(page: number) {
+    this.favoritesService.updatePage(page);
   }
 
+  removeFromFavorite(news: News) {
+    this.favoritesService.removeFavoriteNews(news);
+  }
 }

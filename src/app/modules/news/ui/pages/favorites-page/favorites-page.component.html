@@ -1,1 +1,14 @@
-<p>favorites-page works!</p>
+<div class="content">
+  <app-news-list
+    [news]="(news$ | async) ?? []"
+    (favoriteToggled)="removeFromFavorite($event)"
+  ></app-news-list>
+
+  <app-pagination
+    class="pagination"
+    [page]="(page$ | async) ?? 0"
+    [pageSize]="(pageSize$ | async) ?? 0"
+    [itemsCount]="(itemCount$ | async) ?? 0"
+    (pageChanged)="changePage($event)"
+  ></app-pagination>
+</div>

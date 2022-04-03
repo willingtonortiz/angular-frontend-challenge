@@ -11,7 +11,7 @@ type FetchNewsByNameParams = {
 };
 
 type HitResponse = {
-  story_id: number;
+  objectID: string;
   author: string;
   story_title: string;
   story_url: string;
@@ -60,7 +60,7 @@ export class HackernewsService {
 
 const hitResponseToNews = (hit: HitResponse): News => {
   return {
-    id: hit.story_id,
+    id: hit.objectID,
     author: hit.author,
     createdAt: new Date(hit.created_at),
     isFavorite: false,
