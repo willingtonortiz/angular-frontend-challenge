@@ -30,13 +30,17 @@ export class NewsService {
       return;
     }
 
-    this.fetchNewsByQueryAndPage({ query, page: 1 });
+    await this.fetchNewsByQueryAndPage({ query, page: 1 });
+    await this.loadMoreNews();
+    await this.loadMoreNews();
   }
 
   async updateNewsQuery(query: string) {
     // Saving new query to localstorage
     this.saveSelectedQueryToStorage(query);
-    this.fetchNewsByQueryAndPage({ query, page: 1 });
+    await this.fetchNewsByQueryAndPage({ query, page: 1 });
+    await this.loadMoreNews();
+    await this.loadMoreNews();
   }
 
   async loadMoreNews() {
